@@ -1,0 +1,23 @@
+.main-layout {
+  background: white;
+  gap: 40px;
+  .header {
+    background: white;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+    padding: 16px 40px;
+    height: auto;
+
+    position: sticky;
+    top: 0;
+  }
+
+  .content {
+    background: white;
+    //padding: 80px 120px;
+  }
+
+  .footer {
+    margin-top: 40px;
+  }
+}

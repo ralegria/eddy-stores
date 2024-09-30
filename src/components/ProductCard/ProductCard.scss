@@ -1,0 +1,109 @@
+.product-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  &.horizontal-card {
+    flex-direction: row;
+    justify-content: space-between;
+    .thumb-n-content {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+
+      .thumbnail {
+        width: 80px;
+        height: 80px;
+
+        border-radius: 4px;
+      }
+
+      .product-card-content {
+        gap: 5px;
+        .title {
+          font-size: 14px;
+          font-weight: 400;
+        }
+
+        .product-actions {
+          .price {
+            flex-direction: column;
+
+            .original-price {
+              font-size: 14px;
+            }
+
+            .discount-price {
+              font-size: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .thumb-n-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    .thumbnail {
+      object-fit: cover;
+      width: 100%;
+      height: 400px;
+    }
+
+    .product-card-content {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      span.category {
+        font-size: 12px;
+        font-weight: 400;
+        color: #9e9e9e;
+      }
+
+      .title {
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 24px;
+      }
+
+      .product-actions {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        .price {
+          display: flex;
+          flex-direction: row;
+          gap: 4px;
+
+          &.has-discount {
+            flex-direction: row-reverse;
+          }
+
+          .original-price {
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 600;
+
+            color: #1f1f1f;
+          }
+
+          .discount-price {
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            text-decoration: line-through;
+
+            color: #9e9e9e;
+          }
+        }
+      }
+    }
+  }
+}

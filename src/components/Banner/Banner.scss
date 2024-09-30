@@ -1,0 +1,29 @@
+.banner {
+  display: flex;
+  align-items: center;
+
+  .banner-content {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    &.center {
+      align-items: center;
+    }
+    &.left {
+      align-items: flex-start;
+    }
+    &.right {
+      align-items: flex-end;
+    }
+
+    h1 {
+      font-weight: 800;
+    }
+
+    p {
+      font-size: 20px;
+      color: #424242;
+    }
+  }
+}

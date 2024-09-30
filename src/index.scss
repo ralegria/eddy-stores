@@ -1,0 +1,84 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import "./styles/componentsColors.scss";
+@import "./styles/baseColors.scss";
+@import "./styles/textStyles.scss";
+
+body {
+  margin: 0;
+  font-family: $main_font;
+}
+
+.button {
+  @include base_medium;
+  height: fit-content;
+  &.primary {
+    color: white;
+    border-radius: 100px;
+    background: $celeste8;
+
+    &.ant-btn-lg {
+      padding-top: 16px;
+      padding-bottom: 16px;
+    }
+
+    &.ant-btn-text {
+      color: $text_label;
+      background: transparent;
+    }
+
+    &.enabled {
+      color: $text_label;
+      background: $button_enabled;
+      box-shadow: 0px 6px 16px 0px rgba(245, 140, 36, 0.24);
+
+      &:hover {
+        color: $text_label;
+        background: $button_hover;
+      }
+
+      &:active {
+        color: $text_label;
+        background: $button_pressed;
+      }
+    }
+
+    &.disabled {
+      background: $fill_hover;
+      border: none;
+    }
+  }
+}
+
+a {
+  @include base_regular;
+}
+
+h1 {
+  @include heading_1;
+}
+
+h2 {
+  @include heading_2;
+}
+
+h3 {
+  @include heading_3;
+}
+
+h4 {
+  @include heading_4;
+}
+
+h5 {
+  @include base_medium;
+}
+
+label {
+  @include xs_regular;
+  @include color_description;
+}
+
+p {
+  @include base_regular;
+  @include color_description;
+}

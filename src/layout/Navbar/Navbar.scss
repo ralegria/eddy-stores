@@ -1,0 +1,39 @@
+.main-navbar {
+  display: grid;
+  grid-template-columns: 1fr 8fr 1fr;
+  grid-template-areas: "menu logo actions";
+  justify-content: space-between;
+
+  .logo-container {
+    grid-area: logo;
+
+    display: flex;
+    justify-content: center;
+
+    .main-logo {
+      height: 50px;
+    }
+  }
+
+  .menu {
+    grid-area: menu;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 24px;
+
+    a {
+      color: black;
+    }
+  }
+
+  .actions {
+    grid-area: actions;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+}

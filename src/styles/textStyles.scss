@@ -1,0 +1,146 @@
+@import "./baseColors.scss";
+
+//BASE
+
+$main_font: "Poppins", sans-serif;
+
+@mixin base {
+  font-family: $main_font;
+  line-height: normal;
+  font-style: normal;
+  font-size: 16px;
+
+  margin: 0;
+}
+
+@mixin base_regular {
+  @include base;
+  font-weight: 400;
+}
+
+@mixin base_medium {
+  @include base;
+  font-weight: 500;
+}
+
+@mixin base_semibold {
+  @include base;
+  font-weight: 600;
+}
+
+@mixin base_bold {
+  @include base;
+  font-weight: 700;
+}
+
+@mixin base_black {
+  @include base;
+  font-weight: 900;
+}
+
+@mixin xs {
+  @include base;
+  font-size: 12px;
+  line-height: 130%;
+}
+
+@mixin xs_regular {
+  @include xs;
+  font-weight: 400;
+}
+
+@mixin xs_medium {
+  @include xs;
+  font-weight: 500;
+}
+
+@mixin sm {
+  @include base;
+  font-size: 14px;
+}
+
+@mixin sm_regular {
+  @include sm;
+  font-weight: 400;
+}
+
+@mixin sm_medium {
+  @include sm;
+  font-weight: 500;
+}
+
+@mixin lg {
+  @include base;
+  font-size: 20px;
+}
+
+@mixin lg_regular {
+  @include lg;
+  font-weight: 400;
+}
+
+@mixin lg_medium {
+  @include lg;
+  font-weight: 500;
+}
+
+@mixin xl {
+  @include base;
+  font-size: 24px;
+}
+
+@mixin xl_regular {
+  @include xl;
+  font-weight: 400;
+}
+
+@mixin xl_medium {
+  @include xl;
+  font-weight: 500;
+}
+
+@mixin heading {
+  @include base;
+  @include color_heading;
+  font-weight: 400;
+}
+
+@mixin heading_1 {
+  @include heading;
+  font-size: 56px;
+}
+
+@mixin heading_2 {
+  @include heading;
+  font-size: 40px;
+}
+
+@mixin heading_3 {
+  @include heading;
+  font-size: 32px;
+}
+
+@mixin heading_4 {
+  @include heading;
+  font-size: 20px;
+}
+
+@mixin color_heading {
+  color: $text_primary;
+}
+
+@mixin color_description {
+  color: $text_quaternary;
+}
+
+@mixin color_disabled {
+  color: $text_tertiary;
+}
+
+@mixin color_label {
+  color: $text_primary;
+}
+
+@mixin color_textButtonHover {
+  color: $text_tertiary;
+}

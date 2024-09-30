@@ -1,0 +1,19 @@
+.cart {
+  .ant-drawer-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .cart-items {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .cart-sumary {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+.product-list {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  .list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(25rem, 100%), 1fr));
+    gap: 24px;
+
+    .product-skeleton {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      width: 100%;
+    }
+  }
+}
