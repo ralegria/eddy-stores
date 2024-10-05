@@ -1,32 +1,25 @@
 import cn from "classnames";
 import { Button } from "antd";
 import { isEmpty } from "lodash";
-import { CloseOutlined } from "@ant-design/icons";
+import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
+
+import useCart from "../../hooks/useCart";
 
 import { PRODUCT_CARD_STYLES } from "../../consts";
 import { currency, imageURL } from "../../utils";
 
-import { useDispatch } from "react-redux";
-import { addToCart, removeFromCart } from "../../redux/orderSlice";
-
 import "./ProductCard.scss";
 
 const ProductCard = ({ data, type = PRODUCT_CARD_STYLES.DEFAULT }) => {
-  const dispatch = useDispatch();
+  const { addToCartHandler, removeFromCartHandler, isProductInCart } =
+    useCart();
 
   const documentId = data.documentId;
-  const price = !isEmpty(data.pricing) ? data.pricing[0].amount : 0;
+  const isInCart = isProductInCart(documentId);
   const discountPrice = data.discount_price ?? null;
-  const hasCategory = !isEmpty(data.categories);
   const isCartType = type === PRODUCT_CARD_STYLES.CART;
-
-  const addToCartHandler = () => {
-    dispatch(addToCart(data));
-  };
-
-  const removeFromCartHandler = () => {
-    dispatch(removeFromCart(documentId));
-  };
+  const hasCategory = !isEmpty(data.categories);
+  const price = !isEmpty(data.pricing) ? data.pricing[0].amount : 0;
 
   return (
     <div
@@ -48,7 +41,16 @@ const ProductCard = ({ data, type = PRODUCT_CARD_STYLES.DEFAULT }) => {
           <h3 className="title">{data.title}</h3>
           <div className="product-actions">
             {!isCartType && (
-              <Button onClick={() => addToCartHandler()}>Add to cart</Button>
+              <Button
+                icon={isInCart ? <></> : <PlusOutlined />}
+                onClick={() =>
+                  isInCart
+                    ? removeFromCartHandler(documentId)
+                    : addToCartHandler(data)
+                }
+              >
+                {isInCart ? "Added" : "Add to cart"}
+              </Button>
             )}
             <div className={cn("price", { "has-discount": discountPrice })}>
               {discountPrice && (
@@ -73,7 +75,7 @@ const ProductCard = ({ data, type = PRODUCT_CARD_STYLES.DEFAULT }) => {
           icon={<CloseOutlined />}
           type="circle"
           size="small"
-          onClick={() => removeFromCartHandler()}
+          onClick={() => removeFromCartHandler(documentId)}
         />
       )}
     </div>

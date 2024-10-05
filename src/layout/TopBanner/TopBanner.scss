@@ -1,0 +1,29 @@
+@import "../../styles/textStyles.scss";
+
+.top-banners-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+
+  .top-banner {
+    display: grid;
+    grid-template-columns: 10fr auto;
+    align-items: center;
+
+    padding: 10px 40px;
+
+    @include base_semibold;
+
+    .content {
+      justify-self: center;
+    }
+    .close-btn {
+      justify-self: flex-end;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+    }
+  }
+}

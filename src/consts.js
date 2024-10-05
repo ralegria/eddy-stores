@@ -14,6 +14,12 @@ export const COMPONENTS = {
   PRODUCT_LIST: "ComponentComponentsProductList",
 };
 
+export const MENU_TYPES = {
+  HOME: "home",
+  CATALOG: "catalog",
+  CUSTOM: "custom",
+};
+
 export const QUERY_FILTERS = {
   pricingFilters: {
     region: {

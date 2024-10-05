@@ -1,11 +1,14 @@
 import { Helmet as MainHelmet } from "react-helmet";
-import useStyles from "../../hooks/useStyles";
+import useSettings from "../../hooks/useSettings";
+import { imageURL } from "../../utils";
 
 const Helmet = () => {
-  const { styles } = useStyles();
+  const { general_setting } = useSettings();
   return (
     <MainHelmet>
-      <title>{styles.title}</title>
+      <title>{general_setting.title}</title>
+      <meta name="description" content={general_setting.description} />
+      <link rel="icon" href={imageURL(general_setting.favicon?.url)} />
     </MainHelmet>
   );
 };

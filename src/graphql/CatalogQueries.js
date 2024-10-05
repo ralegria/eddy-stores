@@ -45,3 +45,16 @@ export const GET_ALL_PRODUCTS = gql`
     }
   }
 `;
+
+export const GET_CATEGORIES = gql`
+  query Categories {
+    categories {
+      name
+      documentId
+      subcategories {
+        Name
+        documentId
+      }
+    }
+  }
+`;

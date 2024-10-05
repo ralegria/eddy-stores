@@ -8,9 +8,12 @@ body {
   font-family: $main_font;
 }
 
+.ant-btn,
 .button {
   @include base_medium;
   height: fit-content;
+
+  display: flex !important;
   &.primary {
     color: white;
     border-radius: 100px;

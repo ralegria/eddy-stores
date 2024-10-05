@@ -1,11 +1,49 @@
 import { gql } from "@apollo/client";
 
-export const GET_WEBSITE_STYLE = gql`
-  query WebsiteStyle {
-    websiteStyle {
+export const GENERAL_SETTINGS = gql`
+  query GeneralSetting {
+    generalSetting {
       title
       logo {
         url
+      }
+      description
+      favicon {
+        url
+      }
+      metatags {
+        name
+        content
+      }
+    }
+  }
+`;
+
+export const NAVIGATION_SETTINGS = gql`
+  query NavigationSetting {
+    navigationSetting {
+      layout_desktop
+      top_banners {
+        id
+        title
+        description
+        isClosable
+        link
+        start_date
+        end_date
+        background {
+          color_code
+          text_color_code
+          media {
+            url
+          }
+        }
+      }
+      menu {
+        type
+        title
+        link
+        badge
       }
     }
   }

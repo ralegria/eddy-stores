@@ -1,8 +1,7 @@
-import { Button } from "antd";
-import { Link } from "react-router-dom";
+import { Badge, Button, Menu } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 
-import useStyles from "../../hooks/useStyles";
+import useSettings from "../../hooks/useSettings";
 import useLayout from "../../hooks/useLayout";
 import useCart from "../../hooks/useCart";
 
@@ -11,33 +10,50 @@ import Images from "../../components/Images";
 import "./Navbar.scss";
 
 const Navbar = () => {
-  const { styles, loading } = useStyles();
   const { switchCart } = useLayout();
-  const { formatSubtotal } = useCart();
+  const {
+    general_setting,
+    navSettings,
+    isSettingsLoading,
+    menuItems,
+    isNavLoading,
+  } = useSettings();
+  const { formatSubtotal, counter } = useCart();
+  const layoutDesktop = navSettings?.layout_desktop?.split("\n");
+  const navLayoutStyle = layoutDesktop?.reduce((layout, line, index) => {
+    if (index === 0) {
+      return `'${line}'`;
+    }
+    return `${layout} '${line}'`;
+  }, ``);
+
+  const loading = isNavLoading || isSettingsLoading;
+
+  console.log(layoutDesktop, navLayoutStyle);
 
   return (
-    <navbar className="main-navbar">
+    <navbar
+      className="main-navbar"
+      style={{ display: "grid", gridTemplateAreas: navLayoutStyle }}
+    >
       <div className="logo-container">
         {!loading && (
           <Images
             alt="Logo"
-            src={styles?.logo?.url}
-            className="main-logo"
             preview={false}
+            className="main-logo"
+            src={general_setting?.logo?.url}
           />
         )}
       </div>
-      <div className="menu">
-        <Link>Home</Link>
-        <Link>About</Link>
-        <Link>Services</Link>
-        <Link>Contact</Link>
-      </div>
+      <Menu className="menu" mode="horizontal" items={menuItems} />
       <div className="actions">
-        <Button onClick={() => switchCart()}>
-          {formatSubtotal}
-          <ShoppingCartOutlined />
-        </Button>
+        <Badge count={counter}>
+          <Button onClick={() => switchCart()}>
+            {formatSubtotal}
+            <ShoppingCartOutlined />
+          </Button>
+        </Badge>
       </div>
     </navbar>
   );

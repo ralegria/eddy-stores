@@ -1,7 +1,8 @@
 .product-list {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  row-gap: 40px;
+  column-gap: 24px;
 
   .list {
     display: grid;
