@@ -20,14 +20,56 @@ export const GENERAL_SETTINGS = gql`
 `;
 
 export const NAVIGATION_SETTINGS = gql`
-  query NavigationSetting {
-    navigationSetting {
-      layout_desktop
+  query GetNavSetting {
+    navSetting {
+      layout
+      showHomeInMenu
+      isTopBannerClosable
+      menu {
+        id
+        name
+        label
+        url
+        is_external
+        badge
+        submenu_items {
+          id
+          name
+          label
+          description
+          badge
+          url
+          is_external
+          icon {
+            url
+            name
+          }
+          banner {
+            url
+            name
+          }
+          cta {
+            id
+            name
+            label
+            url
+            bg_color
+            text_color
+          }
+          submenu_items {
+            id
+            name
+            label
+            badge
+            url
+            is_external
+          }
+        }
+      }
       top_banners {
         id
         title
         description
-        isClosable
         link
         start_date
         end_date
@@ -36,14 +78,16 @@ export const NAVIGATION_SETTINGS = gql`
           text_color_code
           media {
             url
+            name
           }
         }
       }
-      menu {
-        type
-        title
-        link
-        badge
+      menu_categories_relation {
+        name
+        category {
+          documentId
+          title
+        }
       }
     }
   }
@@ -71,6 +115,7 @@ export const GET_HOME_PAGE = gql`
             showSearchbar
             background {
               color_code
+              text_color_code
               media {
                 url
               }
@@ -81,13 +126,13 @@ export const GET_HOME_PAGE = gql`
               type
               categories {
                 documentId
-                name
+                title
               }
               products {
                 documentId
                 title
                 categories {
-                  name
+                  title
                 }
                 pricing(filters: $pricingFilters) {
                   amount
@@ -118,7 +163,7 @@ export const GET_HOME_PAGE = gql`
               url
             }
             categories {
-              name
+              title
             }
             pricing(filters: $pricingFilters) {
               amount
@@ -132,7 +177,7 @@ export const GET_HOME_PAGE = gql`
           }
           categories {
             documentId
-            name
+            title
           }
         }
       }

@@ -16,8 +16,8 @@ export const COMPONENTS = {
 
 export const MENU_TYPES = {
   HOME: "home",
-  CATALOG: "catalog",
-  CUSTOM: "custom",
+  CATALOG: "ComponentFieldsCatalogMenuItem",
+  CUSTOM: "ComponentFieldsCustomMenuItem",
 };
 
 export const QUERY_FILTERS = {

@@ -30,10 +30,8 @@ export const GET_ALL_PRODUCTS = gql`
       }
       categories {
         documentId
-        name
-        cover_image {
-          url
-        }
+        type
+        title
       }
       stock(filters: $stockFilters) {
         amount
@@ -46,14 +44,55 @@ export const GET_ALL_PRODUCTS = gql`
   }
 `;
 
+export const GET_PRODUCT = gql`
+  query GetProduct(
+    $documentId: ID!
+    $pricingFilters: ComponentFieldsPricingFiltersInput
+    $discountsFilters: ComponentFieldsDiscountsFiltersInput
+    $stockFilters: ComponentFieldsStockFiltersInput
+  ) {
+    product(documentId: $documentId) {
+      documentId
+      title
+      short_description
+      long_description
+      categories {
+        documentId
+        type
+        title
+      }
+      media {
+        url
+      }
+      pricing(filters: $pricingFilters) {
+        amount
+      }
+      discounts(filters: $discountsFilters) {
+        type
+        amount
+        start_date
+        end_date
+      }
+      stock(filters: $stockFilters) {
+        id
+        amount
+        warehouse {
+          documentId
+          name
+          address
+        }
+      }
+    }
+  }
+`;
+
 export const GET_CATEGORIES = gql`
   query Categories {
     categories {
-      name
+      title
       documentId
       subcategories {
-        Name
-        documentId
+        title
       }
     }
   }

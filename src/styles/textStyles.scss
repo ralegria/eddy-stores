@@ -125,6 +125,16 @@ $main_font: "Poppins", sans-serif;
   font-size: 20px;
 }
 
+@mixin heading_5 {
+  @include heading;
+  font-size: 18px;
+}
+
+@mixin heading_6 {
+  @include heading;
+  font-size: 16px;
+}
+
 @mixin color_heading {
   color: $text_primary;
 }

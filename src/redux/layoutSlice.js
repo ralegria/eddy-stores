@@ -1,3 +1,4 @@
+import moment from "moment";
 import { createSlice } from "@reduxjs/toolkit";
 
 export const layoutSlice = createSlice({
@@ -11,10 +12,18 @@ export const layoutSlice = createSlice({
       state.isCartOpen = !state.isCartOpen;
     },
     setTopBanners: (state, action) => {
-      state.topBanners = action.payload.map((banner) => ({
+      state.topBanners = action.payload.filter((banner) => {
+        return (
+          moment().isBetween(banner.start_date, banner.end_date) && {
+            ...banner,
+            closed: false,
+          }
+        );
+      });
+      /* state.topBanners = action.payload.map((banner) => ({
         ...banner,
         closed: false,
-      }));
+      })); */
     },
     closeTopBanner: (state, action) => {
       const closedBanner = state.topBanners.find(

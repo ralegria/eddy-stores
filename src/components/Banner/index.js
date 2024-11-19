@@ -40,8 +40,24 @@ const Banner = ({ data }) => {
             bannerSlides[0].Alignment.toLowerCase(),
           ])}
         >
-          <h1>{bannerSlides[0].title}</h1>
-          <p>{bannerSlides[0].description}</p>
+          <h1
+            style={{
+              ...(bannerSlides[0].background?.text_color_code && {
+                color: bannerSlides[0].background?.text_color_code,
+              }),
+            }}
+          >
+            {bannerSlides[0].title}
+          </h1>
+          <p
+            style={{
+              ...(bannerSlides[0].background?.text_color_code && {
+                color: bannerSlides[0].background?.text_color_code,
+              }),
+            }}
+          >
+            {bannerSlides[0].description}
+          </p>
         </div>
       )}
     </div>

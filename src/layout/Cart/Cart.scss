@@ -15,5 +15,23 @@
       flex-direction: column;
       gap: 16px;
     }
+
+    .proceed-btn {
+      background: #1f1f1f;
+      border-color: #1f1f1f;
+
+      padding: 24px 0;
+      border-radius: 4px;
+
+      &:hover {
+        background: #383838;
+        border-color: #383838;
+      }
+
+      &:focus {
+        background: #4d4d4d;
+        border-color: #4d4d4d;
+      }
+    }
   }
 }

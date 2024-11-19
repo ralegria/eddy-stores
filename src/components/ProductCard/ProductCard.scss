@@ -82,20 +82,18 @@
           flex-direction: row;
           gap: 4px;
 
-          &.has-discount {
+          /* &.has-discount {
             flex-direction: row-reverse;
-          }
+          } */
 
           .original-price {
-            font-size: 20px;
             font-style: normal;
             font-weight: 600;
 
-            color: #0277bd;
+            color: #1f1f1f;
           }
 
           .discount-price {
-            font-size: 12px;
             font-style: normal;
             font-weight: 400;
             text-decoration: line-through;

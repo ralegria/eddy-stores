@@ -52,7 +52,8 @@ body {
   }
 }
 
-a {
+a,
+li {
   @include base_regular;
 }
 
@@ -74,6 +75,11 @@ h4 {
 
 h5 {
   @include base_medium;
+}
+
+h6 {
+  @include base_medium;
+  @include color_label;
 }
 
 label {

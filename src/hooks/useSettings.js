@@ -1,18 +1,15 @@
 import { isEmpty } from "lodash";
-import { useEffect, useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { useQuery } from "@apollo/client";
 
-import { setTopBanners } from "../redux/layoutSlice";
-import { GET_CATEGORIES } from "../graphql/CatalogQueries";
 import { GENERAL_SETTINGS, NAVIGATION_SETTINGS } from "../graphql/SiteQueries";
-import { MENU_TYPES } from "../consts";
+
+import routes from "../routes/routes";
 
 const useSettings = () => {
-  const dispatch = useDispatch();
   const [navSettings, setNavSettings] = useState({});
-  const [categories, setCategories] = useState([]);
   const [general_setting, setGeneralSettings] = useState({});
 
   const { loading: isSettingsLoading } = useQuery(GENERAL_SETTINGS, {
@@ -22,51 +19,69 @@ const useSettings = () => {
   });
   const { loading: isNavLoading } = useQuery(NAVIGATION_SETTINGS, {
     onCompleted: (queryData) => {
-      setNavSettings(queryData.navigationSetting);
-    },
-  });
-
-  const { loading: isLoadingCategories } = useQuery(GET_CATEGORIES, {
-    onCompleted: (data) => {
-      setCategories(data.categories);
+      setNavSettings(queryData.navSetting);
     },
   });
 
   const storedTopBanners = useSelector((state) => state.layout.topBanners);
 
-  const topBannerData = useMemo(
-    () => navSettings.top_banners ?? [],
+  const topBannerData = navSettings.top_banners;
+  const initialNavMenu = useMemo(
+    () =>
+      navSettings?.showHomeInMenu
+        ? [
+            {
+              key: "home-item",
+              label: <Link to={routes.home}>Home</Link>,
+            },
+          ]
+        : [],
     [navSettings]
   );
 
-  useEffect(() => {
-    if (!isEmpty(topBannerData)) {
-      dispatch(setTopBanners(topBannerData));
-    }
-  }, [dispatch, topBannerData]);
+  const menuItems = useMemo(
+    () => {
+      const processItem = (item) => {
+        const label = item.label;
+        const hasChildren = !isEmpty(item.submenu_items);
+        console.log(item.name, item);
 
-  const menuItems = navSettings?.menu?.reduce((menu, item) => {
-    const type = item.type ?? MENU_TYPES.CUSTOM;
-    const url = type === MENU_TYPES.CUSTOM ? item.link : null;
+        const url = !hasChildren ? item.url : null;
 
-    return [
-      ...menu,
-      {
-        key: `${item.title}-${item.id}`,
-        label: <Link to={url}>{item.title}</Link>,
-        ...(type === MENU_TYPES.CATALOG && {
-          children: categories.map((category) => ({
-            key: `${category.name}-${category.documentId}`,
-            label: category.name,
-            children: category?.subcategories?.map((subcategory) => ({
-              key: `${subcategory.Name}-${subcategory.documentId}`,
-              label: subcategory.Name,
-            })),
-          })),
-        }),
-      },
-    ];
-  }, []);
+        const getCategoryRelated = (itemName) => {
+          const element = navSettings?.menu_categories_relation?.find(
+            (category) => category.name === itemName
+          );
+
+          return !isEmpty(element)
+            ? `${element?.category?.title}-${element?.category?.documentId}`.toLowerCase()
+            : null;
+        };
+
+        const getUrl = () => {
+          if (url && !hasChildren) return url;
+          return getCategoryRelated(item.name);
+        };
+
+        return {
+          key: `${label}-${item.id}`,
+          label: <>{getUrl() ? <Link to={getUrl()}>{label}</Link> : label}</>,
+          ...(hasChildren && {
+            children: item.submenu_items.map(processItem),
+          }),
+        };
+      };
+
+      const processMenuItems = (items) =>
+        items.reduce(
+          (menu, item) => [...menu, processItem(item)],
+          [...initialNavMenu]
+        );
+
+      return processMenuItems(navSettings.menu || []);
+    },
+    [navSettings, initialNavMenu] // Dependency array
+  );
 
   return {
     general_setting,
@@ -74,8 +89,8 @@ const useSettings = () => {
     navSettings,
     menuItems,
     isNavLoading,
-    isLoadingCategories,
     topBanners: storedTopBanners,
+    topBannerData,
   };
 };
 

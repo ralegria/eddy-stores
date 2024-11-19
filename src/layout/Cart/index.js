@@ -31,7 +31,11 @@ const Cart = () => {
             <p>Subtotal</p>
             <h5>{formatSubtotal}</h5>
           </div>
-          <Button type="primary" style={{ width: "100%" }}>
+          <Button
+            type="primary"
+            className="proceed-btn"
+            style={{ width: "100%" }}
+          >
             Proceed to Checkout
           </Button>
         </div>

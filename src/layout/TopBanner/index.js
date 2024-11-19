@@ -1,11 +1,12 @@
 import { Button } from "antd";
 import { isEmpty } from "lodash";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { CloseOutlined } from "@ant-design/icons";
 
 import useSettings from "../../hooks/useSettings";
-import { closeTopBanner } from "../../redux/layoutSlice";
+import { closeTopBanner, setTopBanners } from "../../redux/layoutSlice";
 
 import { imageURL } from "../../utils";
 
@@ -13,7 +14,13 @@ import "./TopBanner.scss";
 
 const TopBanner = () => {
   const dispatch = useDispatch();
-  const { topBanners } = useSettings();
+  const { topBanners, topBannerData } = useSettings();
+
+  useEffect(() => {
+    if (!isEmpty(topBannerData)) {
+      dispatch(setTopBanners(topBannerData));
+    }
+  }, [dispatch, topBannerData]);
 
   if (!isEmpty(topBanners)) {
     return (

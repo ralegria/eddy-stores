@@ -1,9 +1,12 @@
 import cn from "classnames";
 import { Button } from "antd";
 import { isEmpty } from "lodash";
-import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
+import { CheckOutlined, CloseOutlined, PlusOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import useCart from "../../hooks/useCart";
+import { selectProduct } from "../../redux/storeSlice";
 
 import { PRODUCT_CARD_STYLES } from "../../consts";
 import { currency, imageURL } from "../../utils";
@@ -11,6 +14,7 @@ import { currency, imageURL } from "../../utils";
 import "./ProductCard.scss";
 
 const ProductCard = ({ data, type = PRODUCT_CARD_STYLES.DEFAULT }) => {
+  const dispatch = useDispatch();
   const { addToCartHandler, removeFromCartHandler, isProductInCart } =
     useCart();
 
@@ -21,6 +25,19 @@ const ProductCard = ({ data, type = PRODUCT_CARD_STYLES.DEFAULT }) => {
   const hasCategory = !isEmpty(data.categories);
   const price = !isEmpty(data.pricing) ? data.pricing[0].amount : 0;
 
+  const onProductClickHandler = () => {
+    dispatch(selectProduct(data));
+  };
+
+  const ProductDetailsLink = ({ children }) => (
+    <Link
+      to={`${process.env.REACT_APP_ROOT}product/${documentId}`}
+      onClick={() => onProductClickHandler()}
+    >
+      {children}
+    </Link>
+  );
+
   return (
     <div
       key={documentId}
@@ -29,20 +46,24 @@ const ProductCard = ({ data, type = PRODUCT_CARD_STYLES.DEFAULT }) => {
       })}
     >
       <div className="thumb-n-content">
-        <img
-          src={imageURL(data.media[0].url)}
-          alt={data.title}
-          className="thumbnail"
-        />
+        <ProductDetailsLink>
+          <img
+            src={imageURL(data.media[0].url)}
+            alt={data.title}
+            className="thumbnail"
+          />
+        </ProductDetailsLink>
         <div className="product-card-content">
-          {hasCategory && !isCartType && (
-            <span className="category">{data.categories[0].name}</span>
-          )}
-          <h3 className="title">{data.title}</h3>
+          <ProductDetailsLink>
+            {hasCategory && !isCartType && (
+              <span className="category">{data.categories[0].title}</span>
+            )}
+            <h3 className="title">{data.title}</h3>
+          </ProductDetailsLink>
           <div className="product-actions">
             {!isCartType && (
               <Button
-                icon={isInCart ? <></> : <PlusOutlined />}
+                icon={isInCart ? <CheckOutlined /> : <PlusOutlined />}
                 onClick={() =>
                   isInCart
                     ? removeFromCartHandler(documentId)
@@ -52,21 +73,23 @@ const ProductCard = ({ data, type = PRODUCT_CARD_STYLES.DEFAULT }) => {
                 {isInCart ? "Added" : "Add to cart"}
               </Button>
             )}
-            <div className={cn("price", { "has-discount": discountPrice })}>
-              {discountPrice && (
-                <span className="original-price">
-                  {currency(discountPrice)}
+            <ProductDetailsLink>
+              <div className={cn("price", { "has-discount": discountPrice })}>
+                {discountPrice && (
+                  <span className="original-price">
+                    {currency(discountPrice)}
+                  </span>
+                )}
+                <span
+                  className={cn("", {
+                    "original-price": !discountPrice,
+                    "discount-price": discountPrice,
+                  })}
+                >
+                  {currency(price)}
                 </span>
-              )}
-              <span
-                className={cn("", {
-                  "original-price": !discountPrice,
-                  "discount-price": discountPrice,
-                })}
-              >
-                {currency(price)}
-              </span>
-            </div>
+              </div>
+            </ProductDetailsLink>
           </div>
         </div>
       </div>

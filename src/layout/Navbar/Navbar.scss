@@ -1,8 +1,12 @@
+@import "../../styles/textStyles.scss";
+
 .main-navbar {
   display: grid;
   grid-template-columns: 25% 50% 25%;
   grid-template-areas: "menu logo actions";
+  align-items: center;
   justify-items: center;
+  position: relative;
 
   padding: 16px 40px;
 
@@ -13,7 +17,7 @@
     justify-content: center;
 
     .main-logo {
-      height: 50px;
+      height: 30px;
     }
   }
 
@@ -23,21 +27,34 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    //gap: 24px;
+    gap: 24px;
 
     border: none;
 
-    &::before {
-      content: none;
-    }
+    list-style: none;
 
     a {
       color: black;
     }
 
-    li {
-      .ant-menu-title-content {
-        line-height: 28px;
+    &::before {
+      content: none;
+    }
+
+    .menu_item {
+      cursor: pointer;
+      opacity: 0.6;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      &.active {
+        border-bottom: 2px solid black;
+        .submenu {
+          display: block;
+          animation-duration: 0.5s;
+        }
       }
     }
   }
@@ -50,5 +67,81 @@
     align-items: center;
     //justify-content: flex-end;
     gap: 10px;
+  }
+}
+
+.submenu-outer-area {
+  position: absolute;
+  left: 0;
+  top: 380px;
+
+  width: 100%;
+  height: 90vh;
+
+  cursor: pointer;
+}
+
+.submenu {
+  position: absolute;
+  left: 0;
+  top: 53px;
+
+  width: 100%;
+  height: fit-content;
+  padding: 33px 0 0;
+
+  .content {
+    background-color: white;
+    box-shadow: 0px 10px 10px rgb(0 0 0 / 5%);
+    border-top: 1px solid #efefef;
+    padding: 56px 320px;
+    //min-height: 300px;
+
+    display: grid;
+    grid-auto-flow: column;
+    gap: 4rem 1rem;
+
+    &.more-columns {
+      grid-template-columns: repeat(auto-fill, minmax(min(24%, 100%), 1fr));
+      grid-auto-flow: inherit;
+    }
+
+    .submenu_item {
+      @include heading_5;
+      font-weight: 500;
+
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      a {
+        @include heading_5;
+        font-weight: 500;
+      }
+
+      .level2_submenu {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        color: gray;
+
+        a,
+        .level2_item {
+          @include heading_6;
+          color: #585858;
+        }
+      }
+    }
+  }
+
+  &.full {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    padding: 100px 300px;
+
+    width: 100%;
+    left: 0;
   }
 }
